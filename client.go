@@ -1,9 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
-	"net/http/httputil"
 	"strconv"
 )
 
@@ -32,11 +32,14 @@ func (c Client) GetIssueWithCildren(id int) []string {
 	if err != nil {
 		panic(err)
 	}
-	dumpResp, err := httputil.DumpResponse(resp, true)
-	if err != nil {
-		panic(err)
+	defer resp.Body.Close()
+	if resp.StatusCode != 200 {
+		fmt.Println("Could not get API")
 	}
-	fmt.Printf("%s", dumpResp)
+	decoder := json.NewDecoder(resp.Body)
+	var r issueRequest
+	err = decoder.Decode(&r)
+	fmt.Println(&r.Issue)
 
 	return []string{"Golang", "Java"} // とりあえずかいている
 }
