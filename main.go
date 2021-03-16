@@ -1,13 +1,8 @@
 package main
 
-import (
-	"fmt"
-)
-
 func main() {
 	c := NewClient()
-	fmt.Println(c.Apikey)
-	fmt.Println(c.Endpoint)
-
-	fmt.Println(c.GetIssueWithCildren(64976))
+	p := c.GetIssue(65527)
+	c.GetChildrenInfo(p)
+	c.ReleaseBlockIssues(p)
 }
