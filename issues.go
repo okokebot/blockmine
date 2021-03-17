@@ -1,14 +1,13 @@
 package main
 
+import (
+	"regexp"
+	"strconv"
+)
+
 type IdName struct {
 	Id   int
 	Name string
-}
-
-type Child struct {
-	Subject string `json:"subject"`
-	Id      int    `json:"id"`
-	Tracker IdName `json:"tracker"`
 }
 
 type Issue struct {
@@ -33,14 +32,26 @@ type issueRequest struct {
 	Issue Issue `json:"issue"`
 }
 
-type BlockIssue struct {
-	Id         int
-	Subject    string
-	Status     IdName
-	AssignedTo IdName
+// 未動作確認があれば、その親issue、いれば担当者を列挙する
+func (parent Issue) createReleaseBlock(c Client) string {
+	s := ""
+	for _, child := range parent.Children {
+		if checkReleaseBlock(child) {
+			assigned := ""
+			if child.AssignedTo.Name == "" {
+				assigned = "なし"
+			} else {
+				assigned = child.AssignedTo.Name
+			}
+			s += c.Endpoint + "/issues/" + strconv.Itoa(parent.Id) + " における\n"
+			s += strconv.Itoa(child.Id) + " 担当者: " + assigned + " がブロック\n"
+		}
+	}
+	return s
 }
 
-type BlockStory struct {
-	BlockStory BlockIssue
-	BlockTasks []BlockIssue
+func checkReleaseBlock(child Issue) bool {
+	r := regexp.MustCompile(`.*動作確認.*`)
+	unfinStatus := []string{"新規", "進行中", "フィードバック"}
+	return r.MatchString(child.Subject) && contains(unfinStatus, child.Status.Name)
 }
