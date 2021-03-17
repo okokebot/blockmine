@@ -1,4 +1,4 @@
-package main
+package redmine
 
 import (
 	"regexp"
