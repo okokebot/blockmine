@@ -1,9 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/okokebot/blockmine/pkg/redmine"
+)
 
 func main() {
-	c := NewClient()
+	c := redmine.NewClient()
 	p := c.GetIssue(65527)
 	c.GetChildrenInfo(p)
 	s := p.createReleaseBlock(*c)
