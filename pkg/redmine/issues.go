@@ -33,7 +33,7 @@ type issueRequest struct {
 }
 
 // 未動作確認があれば、その親issue、いれば担当者を列挙する
-func (parent Issue) createReleaseBlock(c Client) string {
+func (parent Issue) CreateReleaseBlock(c Client) string {
 	s := ""
 	for _, child := range parent.Children {
 		if checkReleaseBlock(child) {

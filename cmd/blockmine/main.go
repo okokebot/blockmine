@@ -10,6 +10,6 @@ func main() {
 	c := redmine.NewClient()
 	p := c.GetIssue(65527)
 	c.GetChildrenInfo(p)
-	s := p.createReleaseBlock(*c)
+	s := p.CreateReleaseBlock(*c)
 	fmt.Println(s)
 }
