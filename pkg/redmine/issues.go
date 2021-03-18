@@ -43,8 +43,7 @@ func (parent Issue) CreateReleaseBlock(c Client) string {
 			} else {
 				assigned = child.AssignedTo.Name
 			}
-			s += c.Endpoint + "/issues/" + strconv.Itoa(parent.Id) + " における\n"
-			s += strconv.Itoa(child.Id) + " 担当者: " + assigned + " がブロック\n"
+			s += c.Endpoint + "/issues/" + strconv.Itoa(parent.Id) + " における\n" + strconv.Itoa(child.Id) + " 担当者: " + assigned + " がブロック\n"
 		}
 	}
 	return s
