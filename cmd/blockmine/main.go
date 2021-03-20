@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/okokebot/blockmine/pkg/importid"
+	"github.com/okokebot/blockmine/internal/importid"
 	"github.com/okokebot/blockmine/pkg/redmine"
 )
 
