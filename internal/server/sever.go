@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/okokebot/blockmine/internal/importid"
 )
 
 type Request struct {
@@ -54,32 +55,7 @@ func convertController(c *gin.Context) {
 		return
 	}
 
-	// c.ShouldBindJSON(&req)
-	// fmt.Println("=========")
-	// fmt.Println(req)
-	// fmt.Println("=========")
-
-	// c.Bind(&req)
-	// fmt.Println("=========")
-	// fmt.Println(req)
-	// fmt.Println("=========")
-	// パラメータ取得
-	// title := c.Query("title")
-	// category, _ := strconv.Atoi(c.Query("category"))
-	// author := c.Query("author")
-
-	// 検索処理
-	// var s book.Service
-	// p, err := s.Search(title, category, author)≥
-	fmt.Println(req.Body)
-	result := "req.Bodyでない"
-	// // 検索結果を返す
-	// if err != nil {
-	// 	c.AbortWithStatus(http.StatusNotFound)
-	// 	fmt.Println(err)
-	// } else {
-	// 	c.JSON(http.StatusOK, p)
-	// }
+	result := importid.CreateBlockNote(req.Body)
 	c.JSON(http.StatusOK, gin.H{
 		"body": result,
 	})

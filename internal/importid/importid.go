@@ -3,6 +3,8 @@ package importid
 import (
 	"regexp"
 	"strconv"
+
+	"github.com/okokebot/blockmine/pkg/redmine"
 )
 
 func PulloutIssueIdFromReleaseNote(s string) []int {
@@ -15,4 +17,16 @@ func PulloutIssueIdFromReleaseNote(s string) []int {
 	}
 
 	return ids
+}
+
+func CreateBlockNote(s string) string {
+	ids := PulloutIssueIdFromReleaseNote(s)
+	c := redmine.NewClient()
+	blocks := ""
+	for _, id := range ids {
+		p := c.GetIssue(id)
+		c.GetChildrenInfo(p)
+		blocks += p.CreateReleaseBlock(*c)
+	}
+	return blocks
 }
