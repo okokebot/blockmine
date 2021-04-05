@@ -8,4 +8,4 @@ ENV GO111MODULE=on
 
 EXPOSE 8080
 
-CMD go run cmd/blockmine/main.go
+CMD go build ./cmd/blockmine && ./blockmine
