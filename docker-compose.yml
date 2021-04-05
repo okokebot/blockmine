@@ -3,14 +3,10 @@ services:
   backend:
     build: .
     tty: true
-    volumes:
-      - .:/go/src/app
     ports:
       - "127.0.0.1:8080:8080"
   frontend: # blockmine と blockmine-frontend を同じ階層におくこと
     build: ../blockmine-front/
     tty: true
-    volumes:
-      - ../blockmine-front:/app
     ports:
       - "127.0.0.1:3000:3000"
